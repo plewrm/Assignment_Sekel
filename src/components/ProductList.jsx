@@ -58,7 +58,7 @@ const ProductList = () => {
 
   return (
     <div>
-      <h1 className='text-center'>Product List</h1>
+      <h1 className='text-center'>Product's List</h1>
       {/* Search input field */}
       <Input
         placeholder="Search products"
