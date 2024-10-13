@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchProducts, toggleFavorite } from '../redux/actions/ProductActions';
+import { fetchProducts, toggleCart } from '../redux/actions/ProductActions';
 import { Link,useNavigate } from 'react-router-dom';
 import { Card, Button, Input, Pagination, Alert, Select, Slider, Rate } from 'antd';
 
@@ -10,7 +10,7 @@ const { Option } = Select;
 const ProductList = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
-  const favorites = useSelector((state) => state.favorites);
+  const cart = useSelector((state) => state.cart);
   const navigate = useNavigate();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -38,11 +38,11 @@ const ProductList = () => {
       });
   }, [dispatch]);
 
-  const handleToggleFavorite = (productId) => {
-    dispatch(toggleFavorite(productId));
+  const handleToggleCart = (productId) => {
+    dispatch(toggleCart(productId));
   };
 
-  // Filter products based on search query, category, price range, and rating
+  //  Adding Filter products based on search query, category, price range, and rating.
   const filteredProducts = products
     ? products
         .filter((product) =>
@@ -132,9 +132,12 @@ const ProductList = () => {
               actions={[
                 <Button
                   type="primary"
-                  onClick={() => handleToggleFavorite(product.id)}
+                  onClick={(e) => {
+                    e.stopPropagation(); 
+                    handleToggleCart(product.id); 
+                  }}
                 >
-                  {favorites.includes(product.id) ? 'Remove From Cart' : 'Add To Cart'}
+                  {cart.includes(product.id) ? 'Remove From Cart' : 'Add To Cart'}
                 </Button>,
               ]}
             >

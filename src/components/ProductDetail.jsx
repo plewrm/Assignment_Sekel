@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { toggleFavorite } from '../redux/actions/ProductActions';
+import { toggleCart } from '../redux/actions/ProductActions';
 import { Button } from 'antd';
 
 const ProductDetail = () => {
@@ -10,10 +10,10 @@ const ProductDetail = () => {
   const product = useSelector((state) =>
     state.products.products.find((p) => p.id === Number(id))
   );
-  const favorites = useSelector((state) => state.favorites);
+  const cart = useSelector((state) => state.cart);
 
-  const handleToggleFavorite = (productId) => {
-    dispatch(toggleFavorite(productId));
+  const handleToggleCart = (productId) => {
+    dispatch(toggleCart(productId));
   };
 
   return (
@@ -29,10 +29,10 @@ const ProductDetail = () => {
 
           <Button
             type="primary"
-            onClick={() => handleToggleFavorite(product.id)}
-            disabled={favorites.includes(product.id) && favorites.length >= 5}
+            onClick={() => handleToggleCart(product.id)}
+            disabled={cart.includes(product.id) && cart.length >= 5}
           >
-            {favorites.includes(product.id) ? 'Remove From Cart' : 'Add To Cart'}
+            {cart.includes(product.id) ? 'Remove From Cart' : 'Add To Cart'}
           </Button> &nbsp; &nbsp; <Button type="primary">
                   <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>Back to Product List</Link>
                 </Button><br />

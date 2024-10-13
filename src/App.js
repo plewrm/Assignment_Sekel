@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 import Navbar from './components/Navbar'
 import ProductList from './components/ProductList'
 import ProductDetail from './components/ProductDetail'
-import FavoritesList from './components/FavoritesList'
+import CartList from './components/CartList'
 const { Header, Content } = Layout;
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
           <Routes>
             <Route exact path="/" element={<ProductList />} />
             <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/favorites" element={<FavoritesList />} />
+            <Route path="/cart" element={<CartList />} />
           </Routes>
         </Content>
       </Layout>

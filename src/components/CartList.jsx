@@ -1,25 +1,24 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleFavorite } from '../redux/actions/ProductActions';
+import { toggleCart } from '../redux/actions/ProductActions';
 import { Button, Card, Input, Pagination, Empty, Statistic } from 'antd';
 
 const { Meta } = Card;
-
-const FavoritesList = () => {
+const CartList = () => {
   const dispatch = useDispatch();
-  const favorites = useSelector((state) => state.favorites);
+  const cart = useSelector((state) => state.cart);
   const products = useSelector((state) => state.products.products);
 
-  const handleRemoveFromFavorites = (productId) => {
-    dispatch(toggleFavorite(productId));
+  const handleRemoveFromCart = (productId) => {
+    dispatch(toggleCart(productId));
   };
 
-  const favoriteProducts = favorites.map((productId) =>
+  const cartProducts = cart.map((productId) =>
     products.find((product) => product.id === productId)
   );
 
-  const totalCost = favoriteProducts.reduce((total, product) => {
-    return total + (product ? product.price : 0); // Ensure product exists before accessing price
+  const totalCost = cartProducts.reduce((total, product) => {
+    return total + (product ? product.price : 0); // 
   }, 0);
 
   return (
@@ -34,11 +33,11 @@ const FavoritesList = () => {
           prefix="$"
         />
       </div>
-      {favoriteProducts.length === 0 ? (
+      {cartProducts.length === 0 ? (
         <Empty description="No shopping Cart added." />
       ) : (
         <div className="product-list">
-          {favoriteProducts.map((product) => (
+          {cartProducts.map((product) => (
             <Card
               key={product.id}
               style={{ width: 300, marginBottom: 20 }}
@@ -46,9 +45,9 @@ const FavoritesList = () => {
               actions={[
                 <Button
                   type="primary"
-                  onClick={() => handleRemoveFromFavorites(product.id)}
+                  onClick={() => handleRemoveFromCart(product.id)}
                 >
-                  Remove from Favorites
+                  Remove from Cart
                 </Button>,
               ]}
             >
@@ -67,4 +66,4 @@ const FavoritesList = () => {
   );
 };
 
-export default FavoritesList;
+export default CartList;

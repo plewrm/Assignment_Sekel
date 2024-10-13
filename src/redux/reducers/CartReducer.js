@@ -1,10 +1,10 @@
-import { TOGGLE_FAVORITE } from '../actions/ProductActions';
+import { TOGGLE_CART } from '../actions/ProductActions';
 
 const initialState = [];
 
-const favoriteReducer = (state = initialState, action) => {
+const cartReducer = (state = initialState, action) => {
   switch (action.type) {
-    case TOGGLE_FAVORITE:
+    case TOGGLE_CART:
       const productId = action.payload;
       if (state.includes(productId)) {
         return state.filter((id) => id !== productId);
@@ -20,4 +20,4 @@ const favoriteReducer = (state = initialState, action) => {
   }
 };
 
-export default favoriteReducer;
+export default cartReducer;

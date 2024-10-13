@@ -6,7 +6,7 @@ import { HomeOutlined, StarOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 
 const Navbar = () => {
-  const cartItems = useSelector((state) => state.favorites || []);
+  const cartItems = useSelector((state) => state.cart || []);
   return (
     <Menu mode="horizontal">
       {/* Logo */}
@@ -25,8 +25,8 @@ const Navbar = () => {
           <span style={{ fontSize:'16px' }}>Home</span>
         </Link>
       </Menu.Item>
-      <Menu.Item key="favorites">
-        <Link to="/favorites" style={{ textDecoration: 'none'}}>
+      <Menu.Item key="cart">
+        <Link to="/cart" style={{ textDecoration: 'none'}}>
           <Badge count={cartItems.length} overflowCount={9} showZero></Badge>
           <span style={{ fontSize:'16px' }}>Cart</span>
         </Link>

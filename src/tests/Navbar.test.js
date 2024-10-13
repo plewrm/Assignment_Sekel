@@ -11,8 +11,8 @@ test('renders Navbar component', () => {
   );
 
   const homeLink = getByText(/Home/i);
-  const favoritesLink = getByText(/Favorites/i);
+  const cartLink = getByText(/Cart/i);
 
   expect(homeLink).toBeInTheDocument();
-  expect(favoritesLink).toBeInTheDocument();
+  expect(cartLink).toBeInTheDocument();
 });

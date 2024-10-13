@@ -1,4 +1,4 @@
-import { FETCH_PRODUCTS_SUCCESS, TOGGLE_FAVORITE } from '../actions/ProductActions';
+import { FETCH_PRODUCTS_SUCCESS, TOGGLE_CART } from '../actions/ProductActions';
 
 const initialState = {
   products: [],
@@ -7,20 +7,18 @@ const initialState = {
 // Reducer function for products
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
-    // Action case for fetching products success
     case FETCH_PRODUCTS_SUCCESS:
       return {
         ...state,
         products: action.payload, 
       };
-    // Action case for toggling favorite status
-    case TOGGLE_FAVORITE:
+    case TOGGLE_CART:
       const productId = action.payload;
       const updatedProducts = state.products.map((product) => {
         if (product.id === productId) {
           return {
             ...product,
-            isFavorite: !product.isFavorite,
+            isCart: !product.isCart,
           };
         }
         return product;
