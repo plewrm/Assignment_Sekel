@@ -21,21 +21,18 @@ const ProductDetail = () => {
       {product ? (
         <div>
           <h1>{product.title}</h1>
-          <img src={product.thumbnail} alt={product.title} />
+          <img src={product.image} alt={product.title} />
           <p>Description: {product.description}</p>
           <p>Category: {product.category}</p>
-          <p>Brand: {product.brand}</p>
-          <p>Price: {product.price}</p>
-          <p>Rating: {product.rating}</p>
-          <p>Stock: {product.stock}</p>
-          
-          
+          <p style={{ fontWeight: 'bold', fontSize: '16px' }}> Price: ${product.price}</p>
+          <p>Rating: {product.rating?.rate} / 5 ({product.rating?.count} reviews)</p>
+
           <Button
             type="primary"
             onClick={() => handleToggleFavorite(product.id)}
             disabled={favorites.includes(product.id) && favorites.length >= 5}
           >
-            {favorites.includes(product.id) ? 'Remove Favorite' : 'Add Favorite'}
+            {favorites.includes(product.id) ? 'Remove From Cart' : 'Add To Cart'}
           </Button> &nbsp; &nbsp; <Button type="primary">
                   <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>Back to Product List</Link>
                 </Button><br />

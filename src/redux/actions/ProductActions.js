@@ -21,12 +21,14 @@ export const fetchProducts = () => {
   return async (dispatch) => {
     try {
       // Send GET request to fetch products from API
-      const response = await axios.get('https://dummyjson.com/products');
+      // const response = await axios.get('https://dummyjson.com/products');
+      const response = await axios.get('https://fakestoreapi.com/products');
       // Dispatch action with fetched products data
-      dispatch(fetchProductsSuccess(response.data.products));
+      dispatch(fetchProductsSuccess(response.data));
+      return response.data;
     } catch (error) {
       console.error('Error fetching data:', error);
-      throw error; 
+      throw error;
     }
   };
 };

@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Menu } from 'antd';
+import { Menu,Badge } from 'antd';
 import Logo from '../logo.png'
 import { HomeOutlined, StarOutlined } from '@ant-design/icons'; 
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
+  const cartItems = useSelector((state) => state.favorites || []);
   return (
     <Menu mode="horizontal">
       {/* Logo */}
@@ -25,8 +27,8 @@ const Navbar = () => {
       </Menu.Item>
       <Menu.Item key="favorites">
         <Link to="/favorites" style={{ textDecoration: 'none'}}>
-          <StarOutlined />  
-          <span style={{ fontSize:'16px' }}>Favorites</span>
+          <Badge count={cartItems.length} overflowCount={9} showZero></Badge>
+          <span style={{ fontSize:'16px' }}>Cart</span>
         </Link>
       </Menu.Item>
     </Menu>
