@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { toggleCart } from '../redux/actions/ProductActions';
@@ -16,26 +16,47 @@ const ProductDetail = () => {
     dispatch(toggleCart(productId));
   };
 
-  return (
-    <div>
-      {product ? (
-        <div>
-          <h1>{product.title}</h1>
-          <img src={product.image} alt={product.title} />
-          <p>Description: {product.description}</p>
-          <p>Category: {product.category}</p>
-          <p style={{ fontWeight: 'bold', fontSize: '16px' }}> Price: ${product.price}</p>
-          <p>Rating: {product.rating?.rate} / 5 ({product.rating?.count} reviews)</p>
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 500);
 
-          <Button
-            type="primary"
-            onClick={() => handleToggleCart(product.id)}
-            disabled={cart.includes(product.id) && cart.length >= 5}
-          >
-            {cart.includes(product.id) ? 'Remove From Cart' : 'Add To Cart'}
-          </Button> &nbsp; &nbsp; <Button type="primary">
-                  <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>Back to Product List</Link>
-                </Button><br />
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 500);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return (
+    <div className="product-detail">
+      {product ? (
+        <div className="product-container">
+          <div className="product-image">
+            <img src={product.image} alt={product.title} />
+          </div>
+          <div className="product-info">
+            <h5 className="product-title">{product.title}</h5>
+            <p className="product-description">Description: {product.description}</p>
+            <p className="product-category">Category: {product.category}</p>
+            <p className="product-price">Price: ${product.price}</p>
+            <p className="product-rating">
+              Rating: {product.rating?.rate} / 5 ({product.rating?.count} reviews)
+            </p>
+            <div className="button-group">
+              <Button
+                type="primary"
+                onClick={() => handleToggleCart(product.id)}
+              >
+                {cart.includes(product.id) ? 'Remove From Cart' : 'Add To Cart'}
+              </Button>
+              <Button type="primary">
+                <Link to="/" className="back-link">Back to Product List</Link>
+              </Button>
+            </div>
+          </div>
         </div>
       ) : (
         <p>Product not found</p>

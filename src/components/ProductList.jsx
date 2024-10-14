@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProducts, toggleCart } from '../redux/actions/ProductActions';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Card, Button, Input, Pagination, Alert, Select, Slider, Rate } from 'antd';
 
 const { Meta } = Card;
@@ -20,6 +20,19 @@ const ProductList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 500);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 500);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const itemsPerPage = 10;
 
@@ -45,14 +58,14 @@ const ProductList = () => {
   //  Adding Filter products based on search query, category, price range, and rating.
   const filteredProducts = products
     ? products
-        .filter((product) =>
-          product.title.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-        .filter((product) => (category ? product.category === category : true))
-        .filter(
-          (product) => product.price >= priceRange[0] && product.price <= priceRange[1]
-        )
-        .filter((product) => product.rating.rate >= minRating)
+      .filter((product) =>
+        product.title.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      .filter((product) => (category ? product.category === category : true))
+      .filter(
+        (product) => product.price >= priceRange[0] && product.price <= priceRange[1]
+      )
+      .filter((product) => product.rating.rate >= minRating)
     : [];
 
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -66,48 +79,46 @@ const ProductList = () => {
   return (
     <div>
       <h1 className="text-center">Product's List</h1>
-      
-      {/* Search input */}
-      <Input
-        placeholder="Search products"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        style={{ marginBottom: '20px' }}
-      />
-
-      {/* Category filter */}
-      <Select
-        placeholder="Select Category"
-        style={{ width: 200, marginRight: 10, marginBottom: '20px' }}
-        onChange={(value) => setCategory(value)}
-        allowClear
-      >
-        <Option value="men's clothing">Men's Clothing</Option>
-        <Option value="women's clothing">Women's Clothing</Option>
-        <Option value="jewelery">Jewelery</Option>
-        <Option value="electronics">Electronics</Option>
-      </Select>
-
-      {/* Price range filter */}
-      <div style={{ marginBottom: '20px' }}>
-        <span>Price Range: </span>
-        <Slider
-          range
-          min={0}
-          max={1000}
-          defaultValue={[0, 1000]}
-          value={priceRange}
-          onChange={(value) => setPriceRange(value)}
-          style={{ width: 300 }}
+      <div style={{ display: 'flex', flexDirection:isMobile ? 'column' :'row', alignItems:'center' , justifyContent:'space-between'}}>
+        <Input
+          placeholder="Search products"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          style={{ marginBottom: '20px' , width: isMobile ? '100%' : '20%'}}
         />
-        <span>${priceRange[0]} - ${priceRange[1]}</span>
+
+        <Select
+          placeholder="Select Category"
+          style={{ width: 200, marginRight: 10, marginBottom: '20px' , width: isMobile ? '100%' : '20%'}}
+          onChange={(value) => setCategory(value)}
+          allowClear
+        >
+          <Option value="men's clothing">Men's Clothing</Option>
+          <Option value="women's clothing">Women's Clothing</Option>
+          <Option value="jewelery">Jewelery</Option>
+          <Option value="electronics">Electronics</Option>
+        </Select>
+
+        <div style={{ marginBottom: '20px' }}>
+          <span>Price Range: </span>
+          <Slider
+            range
+            min={0}
+            max={1000}
+            defaultValue={[0, 1000]}
+            value={priceRange}
+            onChange={(value) => setPriceRange(value)}
+            style={{ width: 300 }}
+          />
+          <span>${priceRange[0]} - ${priceRange[1]}</span>
+        </div>
+
+        <div style={{ marginBottom: '20px' }}>
+          <span>Minimum Rating: </span>
+          <Rate allowHalf value={minRating} onChange={setMinRating} />
+        </div>
       </div>
 
-      {/* Rating filter */}
-      <div style={{ marginBottom: '20px' }}>
-        <span>Minimum Rating: </span>
-        <Rate allowHalf value={minRating} onChange={setMinRating} />
-      </div>
 
       {errorMessage && (
         <Alert
@@ -126,15 +137,15 @@ const ProductList = () => {
           {currentProducts.map((product) => (
             <Card
               key={product.id}
-              style={{ width: '30%', marginBottom: 20 , cursor:'pointer'}}
-              cover={<img alt={product.title} src={product.image} style={{ height: 300, objectFit: 'cover' }} />}
+              style={{ width: isMobile ? '100%' :'30%', marginBottom: 20, cursor: 'pointer', padding:'20px' }}
+              cover={<img alt={product.title} src={product.image} style={{ height: 300, objectFit: 'contain' }} />}
               onClick={() => navigate(`/product/${product.id}`)}
               actions={[
                 <Button
                   type="primary"
                   onClick={(e) => {
-                    e.stopPropagation(); 
-                    handleToggleCart(product.id); 
+                    e.stopPropagation();
+                    handleToggleCart(product.id);
                   }}
                 >
                   {cart.includes(product.id) ? 'Remove From Cart' : 'Add To Cart'}

@@ -58,6 +58,18 @@ code {
   -webkit-animation: spin 1s ease-in-out infinite;
 }
 
+@media (max-width: 600px) {
+  #loading {
+    width: 100px; /* Adjust width for mobile */
+    height: 100px; /* Adjust height for mobile */
+    margin-left: auto; /* Center horizontally */
+    margin-right: auto; /* Center horizontally */
+    display: block; /* Ensure it behaves as a block element */
+  }
+}
+
+
+
 @keyframes spin {
   to {
     -webkit-transform: rotate(360deg);
@@ -77,4 +89,62 @@ p{
 .ant-layout-header{
   background: #fff;
   height: 66px;
+}
+
+
+
+.product-detail {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f7f9fc;
+  min-height: 100vh;
+}
+
+.product-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  padding: 20px;
+}
+
+.product-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.product-title {
+  font-size: 1.8rem;
+  margin: 10px 0;
+}
+
+.product-description, 
+.product-category, 
+.product-price, 
+.product-rating {
+  font-size: 1rem;
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+.product-price {
+  font-weight: bold;
+  color: #2ecc71;
+}
+
+.button-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.back-link {
+  text-decoration: none;
+  color: white;
 }

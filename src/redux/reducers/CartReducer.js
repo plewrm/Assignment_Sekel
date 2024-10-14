@@ -9,7 +9,7 @@ const cartReducer = (state = initialState, action) => {
       if (state.includes(productId)) {
         return state.filter((id) => id !== productId);
       } else {
-        if (state.length < 5) {
+        if (state.length < 10) {
           return [...state, productId];
         } else {
           return state;

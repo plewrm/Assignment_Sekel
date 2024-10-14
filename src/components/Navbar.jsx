@@ -27,8 +27,8 @@ const Navbar = () => {
       </Menu.Item>
       <Menu.Item key="cart">
         <Link to="/cart" style={{ textDecoration: 'none'}}>
+        <span style={{ fontSize:'16px' }}>Cart</span>
           <Badge count={cartItems.length} overflowCount={9} showZero></Badge>
-          <span style={{ fontSize:'16px' }}>Cart</span>
         </Link>
       </Menu.Item>
     </Menu>

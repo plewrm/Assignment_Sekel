@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState ,useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleCart } from '../redux/actions/ProductActions';
 import { Button, Card, Input, Pagination, Empty, Statistic } from 'antd';
@@ -8,6 +8,19 @@ const CartList = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const products = useSelector((state) => state.products.products);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 500);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 500);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const handleRemoveFromCart = (productId) => {
     dispatch(toggleCart(productId));
@@ -40,8 +53,8 @@ const CartList = () => {
           {cartProducts.map((product) => (
             <Card
               key={product.id}
-              style={{ width: 300, marginBottom: 20 }}
-              cover={<img alt={product.title} src={product.image} />}
+              style={{ width: isMobile ? '100%' :'400px', marginBottom: 20, padding:'10px' }}
+              cover={<img alt={product.title} src={product.image} style={{width: isMobile ?'100%' :'300px' , height:'300px', objectFit :'contain'}} />}
               actions={[
                 <Button
                   type="primary"
